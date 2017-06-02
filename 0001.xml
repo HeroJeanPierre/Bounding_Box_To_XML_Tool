@@ -1,0 +1,18 @@
+<annotation>
+	<folder>progress</folder>
+	<filename>0001.jpg</filename>
+	<size>
+		<width>225</width>
+		<height>225</height>
+		<depth>3</depth>
+	</size>
+	<object>
+		<chair/>
+		<bndbox>
+			<xmin>40</xmin>
+			<ymin>218</ymin>
+			<xmax>190</xmax>
+			<ymax>218</ymax>
+		</bndbox>
+	</object>
+</annotation>
