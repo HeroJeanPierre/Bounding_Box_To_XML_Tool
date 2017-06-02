@@ -7,7 +7,7 @@ from os.path import isfile, join
 
 # Init points that will be used to store the data,
 # and bool of if the mouse is press or not
-refPts = [(0, 0), (0, 0)]
+refPts = []
 mouseDown = False
 
 def click_boundary(event, x, y, flags, param):
@@ -16,12 +16,11 @@ def click_boundary(event, x, y, flags, param):
 
     # If the mouse is pressed, take down the
     # x and y coord
-
     if event == cv2.EVENT_LBUTTONDOWN:
-        refPts[0] = (x, y)
+        refPts.append((x, y))
         mouseDown = True
     elif event == cv2.EVENT_LBUTTONUP:
-        refPts[1] = (x, y)
+        refPts.append((x, y))
         mouseDown = False
 
         # Draw a rect around the region of interest...
@@ -38,15 +37,15 @@ args = vars(ap.parse_args())
 cv2.namedWindow("image")
 cv2.setMouseCallback("image", click_boundary)
 
-onlyfiles = [f for f in listdir(args['imagepath']) if isfile(join(args['imagepath'], f))]
+# Gather all files inside of a directory
+image_files = [f for f in listdir(args['imagepath']) if isfile(join(args['imagepath'], f))]
 
 # This will iterate through all the files in the directory
 fileNumber = 0
 
 # keep looping until the 'q' key is pressed
-while True:
-    imageName = args['imagepath'] + onlyfiles[fileNumber]
-    print(imageName)
+while fileNumber < len(image_files):
+    imageName = args['imagepath'] + image_files[fileNumber]
 
     # load the image, clone it, and setup the mouse callback function
     image = cv2.imread(imageName)
@@ -73,6 +72,7 @@ while True:
 
         # roi = clone[refPts[0][1]:refPts[1][1], refPts[0][0]:refPts[1][0]]
         # cv2.imshow("ROI", roi)
+        refPts = []
         fileNumber += 1
         cv2.waitKey(0)
         
